@@ -98,3 +98,25 @@ export function createThreeTable(data: IData, title?: string): Table {
         })
     );
 }
+
+export function horizontalConcat(left: string, right: string): string {
+    const l_rows = left.split('\n');
+    const l_row_count = l_rows.length;
+    const l_row_length = l_rows[l_rows.length - 1].length;
+
+    const r_rows = right.split('\n');
+    const r_row_count = r_rows.length;
+    const r_row_length = r_rows[r_rows.length - 1].length;
+
+    const last_row_i = l_row_count > r_row_count ? l_row_count : r_row_count;
+
+    let result = '';
+    for (let i = 0; i < last_row_i; i++) {
+        result +=
+            (l_row_count > i ? l_rows[i] : ' '.repeat(l_row_length)) +
+            (r_row_count > i ? r_rows[i] : ' '.repeat(r_row_length)) +
+            (i + 1 < last_row_i ? '\n' : '');
+    }
+
+    return result;
+}

@@ -1,4 +1,6 @@
 import * as SerialPort from 'serialport';
+import { commands, handle } from './handler';
+import { delay } from './utils';
 
 export const port = new SerialPort(
     'COM3',
@@ -20,3 +22,15 @@ process.on('SIGINT', () => {
     port.close();
     process.exit();
 });
+
+port.pipe(new SerialPort.parsers.Readline({ delimiter: '\r' })).on(
+    'data',
+    (data) => handle(data as string)
+);
+
+(async () => {
+    for (;;) {
+        commands.forEach((c) => port.write(c));
+        await delay(2000);
+    }
+})();

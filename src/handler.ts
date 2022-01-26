@@ -2,7 +2,16 @@ import { GeneralStatus } from './data/general';
 import { OperationalModeStatus } from './data/mode';
 import { isoDate } from './utils';
 
-export const commands = ['QMOD\r', 'QGS\r'];
+export const commands: {
+    command: string;
+    handler: (data: string) => string;
+}[] = [
+    {
+        command: 'QMOD\r',
+        handler: (r) => new OperationalModeStatus(r).render(),
+    },
+    { command: 'QGS\r', handler: (r) => new GeneralStatus(r).render() },
+];
 
 let cycle = 0;
 let i = 0;
@@ -19,19 +28,9 @@ function output(): void {
 }
 
 export function handle(data: string) {
+    s.push(commands[i].handler(data));
+
     i++;
-
-    switch (i) {
-        case 1: {
-            s.push(new OperationalModeStatus(data).render());
-            break;
-        }
-        case 2: {
-            s.push(new GeneralStatus(data).render());
-            break;
-        }
-    }
-
     if (i === commands.length) {
         cycle++;
         output();

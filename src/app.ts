@@ -30,7 +30,7 @@ port.pipe(new SerialPort.parsers.Readline({ delimiter: '\r' })).on(
 
 (async () => {
     for (;;) {
-        commands.forEach((c) => port.write(c));
+        commands.forEach((c) => port.write(c.command));
         await delay(2000);
     }
 })();

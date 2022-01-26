@@ -1,7 +1,8 @@
 import { GeneralStatus } from './data/general';
+import { OperationalModeStatus } from './data/mode';
 import { isoDate } from './utils';
 
-export const commands = ['QGS\r'];
+export const commands = ['QMOD\r', 'QGS\r'];
 
 let cycle = 0;
 let i = 0;
@@ -22,6 +23,10 @@ export function handle(data: string) {
 
     switch (i) {
         case 1: {
+            s.push(new OperationalModeStatus(data).render());
+            break;
+        }
+        case 2: {
             s.push(new GeneralStatus(data).render());
             break;
         }

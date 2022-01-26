@@ -1,17 +1,5 @@
-import { GeneralStatus } from './data/general';
-import { OperationalModeStatus } from './data/mode';
+import { commands } from './commands';
 import { isoDate } from './utils';
-
-export const commands: {
-    command: string;
-    handler: (data: string) => string;
-}[] = [
-    {
-        command: 'QMOD\r',
-        handler: (r) => new OperationalModeStatus(r).render(),
-    },
-    { command: 'QGS\r', handler: (r) => new GeneralStatus(r).render() },
-];
 
 let cycle = 0;
 let i = 0;

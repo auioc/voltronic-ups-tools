@@ -1,5 +1,6 @@
 import * as SerialPort from 'serialport';
-import { commands, handle } from './handler';
+import { commands } from './commands';
+import { handle } from './handler';
 import { delay } from './utils';
 
 export const port = new SerialPort(

@@ -1,10 +1,17 @@
+import { Command } from 'commander';
 import * as SerialPort from 'serialport';
 import commands from './commands';
 import { handle } from './handler';
 import { delay } from './utils';
 
-export const port = new SerialPort(
-    'COM3',
+const program = new Command();
+
+program.requiredOption('-c, --serialport <path>', 'serial port');
+
+program.parse(process.argv);
+
+const port = new SerialPort(
+    program.opts().serialport,
     {
         baudRate: 2400,
         dataBits: 8,

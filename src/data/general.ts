@@ -1,5 +1,5 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { IData } from './base';
+import IData from './base';
 
 const enum UpsType {
     Standby = 'Standby',
@@ -13,7 +13,7 @@ const UpsTypeMap: { [index: string]: UpsType } = {
     '10': UpsType.Online,
 };
 
-export class GeneralStatus implements IData {
+class GeneralStatus implements IData {
     t_input_voltage: number;
     t_input_frequency: number;
     t_output_voltage: number;
@@ -65,3 +65,5 @@ export class GeneralStatus implements IData {
         );
     }
 }
+
+export default GeneralStatus;

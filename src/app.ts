@@ -1,5 +1,5 @@
 import * as SerialPort from 'serialport';
-import { commands } from './commands';
+import commands from './commands';
 import { handle } from './handler';
 import { delay } from './utils';
 

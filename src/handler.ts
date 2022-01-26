@@ -1,4 +1,4 @@
-import { commands } from './commands';
+import commands from './commands';
 import { isoDate } from './utils';
 
 let cycle = 0;

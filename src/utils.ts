@@ -1,6 +1,6 @@
 import { Table } from 'console-table-printer';
 import { ComplexOptions } from 'console-table-printer/dist/src/models/external-table';
-import { IData } from './data/base';
+import IData from './data/base';
 
 export function delay(ms: number) {
     return new Promise<void>((resolve) => {

@@ -1,5 +1,5 @@
 import { createTwoTable } from '../utils';
-import { IData } from './base';
+import IData from './base';
 
 const enum OperationalMode {
     PowerOn = 'Power On Mode',
@@ -27,7 +27,7 @@ const OperationalModeMap: { [index: string]: OperationalMode } = {
     D: OperationalMode.Shutdown,
 };
 
-export class OperationalModeStatus implements IData {
+class OperationalModeStatus implements IData {
     b_operational_mode: OperationalMode;
 
     constructor(data: string) {
@@ -39,3 +39,5 @@ export class OperationalModeStatus implements IData {
         return createTwoTable(this).render();
     }
 }
+
+export default OperationalModeStatus;

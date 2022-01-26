@@ -19,16 +19,17 @@
         "start": "node dist/app.js"
     },
     "dependencies": {
-        "serialport": "^9.2.8",
         "@serialport/parser-readline": "^9.2.4",
         "chalk": "^5.0.0",
-        "console-table-printer": "^2.10.0"
+        "commander": "^8.3.0",
+        "console-table-printer": "^2.10.0",
+        "serialport": "^9.2.8"
     },
     "devDependencies": {
         "@types/node": "^17.0.12",
+        "@types/serialport": "^8.0.2",
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
-        "eslint": "^8.7.0",
-        "@types/serialport": "^8.0.2"
+        "eslint": "^8.7.0"
     }
 }

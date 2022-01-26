@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "sourceMap": true,
+        "removeComments": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "alwaysStrict": true,
+        "strictFunctionTypes": true,
+        "preserveConstEnums": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "baseUrl": "./src",
+        "lib": ["ESNext"]
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["logs", "node_modules"]
+}

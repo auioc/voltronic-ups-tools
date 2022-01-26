@@ -1,0 +1,34 @@
+{
+    "name": "voltronic-ups-tools",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/auioc/voltronic-ups-tools",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/auioc/voltronic-ups-tools.git"
+    },
+    "author": {
+        "name": "WakelessSloth56",
+        "url": "https://github.com/WakelessSloth56"
+    },
+    "license": "GPL-3.0-or-later",
+    "main": "dist/app.js",
+    "scripts": {
+        "watch": "tsc --watch",
+        "build": "tsc",
+        "start": "node dist/app.js"
+    },
+    "dependencies": {
+        "serialport": "^9.2.8",
+        "@serialport/parser-readline": "^9.2.4",
+        "chalk": "^5.0.0",
+        "console-table-printer": "^2.10.0"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.12",
+        "@typescript-eslint/eslint-plugin": "^5.10.1",
+        "@typescript-eslint/parser": "^5.10.1",
+        "eslint": "^8.7.0",
+        "@types/serialport": "^8.0.2"
+    }
+}

@@ -1,3 +1,4 @@
+import { GeneralStatus } from './data/general';
 import { isoDate } from './utils';
 
 export const commands = ['QGS\r'];
@@ -19,7 +20,7 @@ export function handle(data: string) {
 
     switch (i) {
         case 1: {
-            s.push(data);
+            s.push(new GeneralStatus(data).render());
             break;
         }
     }

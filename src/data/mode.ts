@@ -1,5 +1,5 @@
 import { createTwoTable, horizontalConcat } from '../utils';
-import { Data } from './base';
+import { Data, IData } from './base';
 
 const enum OperationalMode {
     PowerOn = 'Power On Mode',
@@ -42,6 +42,10 @@ class OperationalModeStatus extends Data {
             createTwoTable(this).render(),
             createPowerFlow(this.b_operational_mode)
         );
+    }
+
+    summarise(): IData {
+        return { 'Operational Mode': this.b_operational_mode };
     }
 }
 

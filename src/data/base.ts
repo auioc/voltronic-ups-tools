@@ -14,4 +14,8 @@ export class Data implements IData {
     render(): string {
         return JSON.stringify(this);
     }
+
+    summarise(): IData {
+        return {};
+    }
 }

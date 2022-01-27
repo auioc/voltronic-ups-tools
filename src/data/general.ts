@@ -1,5 +1,5 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { Data } from './base';
+import { Data, IData } from './base';
 
 const enum UpsType {
     Standby = 'Standby',
@@ -62,6 +62,21 @@ class GeneralStatus extends Data {
             createThreeTable(this, 'General Status').render(),
             createTwoTable(this, 'General Status').render()
         );
+    }
+
+    summarise(): IData {
+        return {
+            'Input Voltage': this.t_input_voltage.toFixed(1) + ' V',
+            'Input Frequency': this.t_input_frequency + ' Hz',
+            'Output Voltage': this.t_output_voltage.toFixed(1) + ' V',
+            'Output Current': this.t_output_current.toFixed(1) + ' A',
+            'Output Power':
+                (this.t_output_voltage * this.t_output_current).toFixed(2) +
+                ' W',
+            'Output Frequency': this.t_input_frequency + ' Hz',
+            Temperature: this.t_temperature + ' °C',
+            'Load Level': this.t_load_level + ' %',
+        };
     }
 }
 

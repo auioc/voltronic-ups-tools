@@ -4,9 +4,11 @@ import commands from './commands';
 import { handle } from './handler';
 import { delay } from './utils';
 
-const program = new Command();
+export const program = new Command();
 
-program.requiredOption('-c, --serialport <path>', 'serial port');
+program
+    .requiredOption('-c, --serialport <path>', 'serial port')
+    .option('-s --summary', 'summary only');
 
 program.parse(process.argv);
 

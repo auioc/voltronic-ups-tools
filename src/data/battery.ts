@@ -1,5 +1,5 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { Data } from './base';
+import { Data, IData } from './base';
 
 class BatteryStatus extends Data {
     t_voltage: number;
@@ -26,6 +26,14 @@ class BatteryStatus extends Data {
             createThreeTable(this, 'Battery Status').render(),
             createTwoTable(this, 'Battery Info').render()
         );
+    }
+
+    summarise(): IData {
+        return {
+            'Battery Voltage': this.t_voltage + ' V',
+            'Battery Level': this.t_capacity_level + ' %',
+            'Remaining Backup Time': this.t_remaining_backup_time + ' min',
+        };
     }
 }
 

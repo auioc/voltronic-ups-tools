@@ -1,22 +1,33 @@
+import { program } from './app';
 import commands from './commands';
-import { isoDate } from './utils';
+import { IData } from './data/base';
+import { createNameValueTable, isoDate } from './utils';
 
 let cycle = 0;
 let i = 0;
-let s: string[] = [];
+let r: string[] = [];
+let s: IData = {};
 
 function output(): void {
     process.stdout.write('\x1b[H\x1b[J'); // move cursor to top left corner and clear screen
 
-    console.info(s.join('\n').trimEnd());
-    console.info(`Polling cycle ${cycle}, time: ${isoDate(Date.now())}`);
+    if (program.opts().summary) {
+        console.info(createNameValueTable(s, 'Summary Status').render());
+    } else {
+        console.info(r.join('\n').trimEnd());
+    }
+    console.info(`Polling cycle ${cycle}\nTime: ${isoDate(Date.now())}`);
 
     i = 0;
-    s = [];
+    r = [];
+    s = {};
 }
 
 export function handle(data: string) {
-    s.push(commands[i].handler(data).render());
+    const p = commands[i].handler(data);
+
+    r.push(p.render());
+    Object.assign(s, p.summarise());
 
     i++;
     if (i === commands.length) {

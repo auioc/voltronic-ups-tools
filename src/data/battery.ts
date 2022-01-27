@@ -1,7 +1,7 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import IData from './base';
+import { Data } from './base';
 
-class BatteryStatus implements IData {
+class BatteryStatus extends Data {
     t_voltage: number;
     t_capacity_level: number;
     t_remaining_backup_time: number;
@@ -9,14 +9,16 @@ class BatteryStatus implements IData {
     b_number_of_batteries: number;
     b_number_of_battery_packs_in_parallel: number;
 
+    // QBV\r
+    // (027.4 02 01 100 048
     constructor(data: string) {
-        const parsed = data.replace('(', '').split(' ');
+        super(data);
 
-        this.t_voltage = Number(parsed[0]);
-        this.b_number_of_batteries = Number(parsed[1]);
-        this.b_number_of_battery_packs_in_parallel = Number(parsed[2]);
-        this.t_capacity_level = Number(parsed[3]);
-        this.t_remaining_backup_time = Number(parsed[4]);
+        this.t_voltage = Number(this.parsed[0]);
+        this.b_number_of_batteries = Number(this.parsed[1]);
+        this.b_number_of_battery_packs_in_parallel = Number(this.parsed[2]);
+        this.t_capacity_level = Number(this.parsed[3]);
+        this.t_remaining_backup_time = Number(this.parsed[4]);
     }
 
     render(): string {

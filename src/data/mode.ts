@@ -1,5 +1,5 @@
 import { createTwoTable, horizontalConcat } from '../utils';
-import IData from './base';
+import { Data } from './base';
 
 const enum OperationalMode {
     PowerOn = 'Power On Mode',
@@ -27,12 +27,14 @@ const OperationalModeMap: { [index: string]: OperationalMode } = {
     D: OperationalMode.Shutdown,
 };
 
-class OperationalModeStatus implements IData {
+class OperationalModeStatus extends Data {
     b_operational_mode: OperationalMode;
 
+    // QMOD\r
     constructor(data: string) {
-        // QMOD\r
-        this.b_operational_mode = OperationalModeMap[data.replace('(', '')];
+        super(data);
+
+        this.b_operational_mode = OperationalModeMap[this.parsed[0]];
     }
 
     render(): string {

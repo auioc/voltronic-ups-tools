@@ -1,5 +1,5 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import IData from './base';
+import { Data } from './base';
 
 const enum UpsType {
     Standby = 'Standby',
@@ -13,7 +13,7 @@ const UpsTypeMap: { [index: string]: UpsType } = {
     '10': UpsType.Online,
 };
 
-class GeneralStatus implements IData {
+class GeneralStatus extends Data {
     t_input_voltage: number;
     t_input_frequency: number;
     t_output_voltage: number;
@@ -32,22 +32,21 @@ class GeneralStatus implements IData {
     b_shutdown_active: boolean;
     b_beeper_muted: boolean;
 
+    // QGS\r
+    // (224.9 50.0 219.8 50.0 000.9 018 362.1 361.0 027.3 ---.- 020.3 100000000001
     constructor(data: string) {
-        // QGS\r
-        // (224.9 50.0 219.8 50.0 000.9 018 362.1 361.0 027.3 ---.- 020.3 100000000001
-        const parsed = data.replace('(', '').split(' ');
+        super(data);
 
-        this.t_input_voltage = Number(parsed[0]);
-        this.t_input_frequency = Number(parsed[1]);
+        this.t_input_voltage = Number(this.parsed[0]);
+        this.t_input_frequency = Number(this.parsed[1]);
+        this.t_output_voltage = Number(this.parsed[2]);
+        this.t_output_frequency = Number(this.parsed[3]);
+        this.t_output_current = Number(this.parsed[4]);
+        this.t_load_level = Number(this.parsed[5]);
+        this.t_battery_voltage = Number(this.parsed[8]);
+        this.t_temperature = Number(this.parsed[10]);
 
-        this.t_output_voltage = Number(parsed[2]);
-        this.t_output_frequency = Number(parsed[3]);
-        this.t_output_current = Number(parsed[4]);
-        this.t_load_level = Number(parsed[5]);
-        this.t_battery_voltage = Number(parsed[8]);
-        this.t_temperature = Number(parsed[10]);
-
-        const bits = parsed[11].split('').map((b) => Number(b));
+        const bits = this.parsed[11].split('').map((b) => Number(b));
         this.b_ups_type = UpsTypeMap[`${bits[0]}${bits[1]}`];
         this.b_battery_mode = Boolean(bits[2]);
         this.b_battery_low = Boolean(bits[3]);
@@ -60,8 +59,8 @@ class GeneralStatus implements IData {
 
     render(): string {
         return horizontalConcat(
-            createThreeTable(this).render(),
-            createTwoTable(this).render()
+            createThreeTable(this, 'General Status').render(),
+            createTwoTable(this, 'General Status').render()
         );
     }
 }

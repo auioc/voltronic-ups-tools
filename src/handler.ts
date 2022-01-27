@@ -16,7 +16,7 @@ function output(): void {
 }
 
 export function handle(data: string) {
-    s.push(commands[i].handler(data));
+    s.push(commands[i].handler(data).render());
 
     i++;
     if (i === commands.length) {

@@ -1,4 +1,4 @@
-import { createTwoTable } from '../utils';
+import { createTwoTable, horizontalConcat } from '../utils';
 import IData from './base';
 
 const enum OperationalMode {
@@ -36,8 +36,56 @@ class OperationalModeStatus implements IData {
     }
 
     render(): string {
-        return createTwoTable(this).render();
+        return horizontalConcat(
+            createTwoTable(this).render(),
+            createPowerFlow(this.b_operational_mode)
+        );
     }
+}
+
+function createPowerFlow(mode: OperationalMode): string {
+    const _ = '\x1b[0m';
+    const red = '\x1b[31m';
+    const green = '\x1b[32m';
+    const blue = '\x1b[36m';
+
+    let i = ''; // Input
+    let o = ''; // Output
+    let a = ''; // AC DC
+    let d = ''; // DC AC
+    let b = ''; // Battery
+    let p = ''; // Bypass
+
+    switch (mode) {
+        case OperationalMode.Line: {
+            [i, o, a, d, b, p] = [green, green, green, green, blue, ''];
+            break;
+        }
+        case OperationalMode.Bypass: {
+            [i, o, a, d, b, p] = [green, green, green, '', blue, green];
+            break;
+        }
+        case OperationalMode.Standby: {
+            [i, o, a, d, b, p] = [green, '', green, '', blue, ''];
+            break;
+        }
+        case OperationalMode.Battery: {
+            [i, o, a, d, b, p] = [red, green, '', green, green, ''];
+            break;
+        }
+    }
+
+    // prettier-ignore
+    const result =
+    /*            */`         ${p}┏━━━━━━━━━━━━━━━━━━━┓${_}\n`+
+    `${i}┏━━━━━━━┓${_}`+/* */`${p}┃${_}`+/* */`    ${b}┏━━━━━━━━━┓${_}`+/*         */`    ${p}┃${_}${o}┏━━━━━━━━┓${_}\n`+
+    `${i}┃ INPUT ┣${_}`+ `${a}${p}┫${_}   ${a}┏${_}${b}┫ BATTERY ┣${_}${d}┓${_}   `+ `${d}${p}┣${_}${o}┫ OUTPUT ┃${_}\n`+
+    `${i}┗━━━━━━━┛${_}`+/* */`${a}┃${_}   ${a}┃${_}${b}┗━━━━━━━━━┛${_}${d}┃${_}   `+/* */`${d}┃${_}${o}┗━━━━━━━━┛${_}\n`+
+    /*            */`         ${a}┃┏━━┻━━━━┓${_}`+/*         */` ${d}┏━━━━┻━━┓${_}`+/* */`${d}┃${_}\n`+
+    /*            */`         ${a}┗┫ AC/DC ┃${_}`+/*         */` ${d}┃ DC/AC ┣${_}`+/* */`${d}┛${_}\n`+
+    /*            */`         ${a} ┗━━━━━━━┛${_}`+/*         */` ${d}┗━━━━━━━┛${_}`;
+
+    return result;
 }
 
 export default OperationalModeStatus;

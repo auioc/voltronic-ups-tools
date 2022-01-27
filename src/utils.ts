@@ -40,15 +40,18 @@ export function getPrintableRowLength(str: string): number {
 }
 
 export function createTable(
-    data: IData,
+    data: { [index: string]: any },
     options: ComplexOptions,
-    shouldAdd: (key: string) => boolean,
+    shouldAdd: (key: string, value: any) => boolean,
     createRow: (key: string, value: any) => { [index: string]: any }
 ): Table {
     const table = new Table(options);
 
     for (const key in data) {
-        if (Object.prototype.hasOwnProperty.call(data, key) && shouldAdd(key)) {
+        if (
+            Object.prototype.hasOwnProperty.call(data, key) &&
+            shouldAdd(key, data[key])
+        ) {
             table.addRow(createRow(key, data[key]));
         }
     }

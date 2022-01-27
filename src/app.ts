@@ -8,6 +8,7 @@ export const program = new Command();
 
 program
     .requiredOption('-c, --serialport <path>', 'serial port')
+    .option('-d, --delay <delay>', 'poll delay', '2')
     .option('-s --summary', 'summary only');
 
 program.parse(process.argv);
@@ -39,8 +40,9 @@ port.pipe(new SerialPort.parsers.Readline({ delimiter: '\r' })).on(
 );
 
 (async () => {
+    const _delay = parseInt(program.opts().delay) * 1000;
     for (;;) {
         commands.forEach((c) => port.write(c.command));
-        await delay(2000);
+        await delay(_delay);
     }
 })();

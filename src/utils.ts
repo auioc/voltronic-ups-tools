@@ -59,6 +59,21 @@ export function createTable(
     return table;
 }
 
+export function createNameValueTable(data: IData, title?: string): Table {
+    return createTable(
+        data,
+        {
+            columns: [
+                { name: 'name', title: 'Name', alignment: 'left' },
+                { name: 'value', title: 'Value', alignment: 'left' },
+            ],
+            title: title,
+        },
+        () => true,
+        (key, value) => ({ name: key, value: value })
+    );
+}
+
 function parsePrototypeName(name: string): string {
     return name
         .substring(2) // remove prefix

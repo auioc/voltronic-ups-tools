@@ -1,8 +1,6 @@
 import { Command } from 'commander';
 import * as SerialPort from 'serialport';
-import commands from './commands';
-import { handle } from './handler';
-import { delay } from './utils/time';
+import { startPolling } from './handler/send';
 
 export const program = new Command();
 
@@ -13,7 +11,7 @@ program
 
 program.parse(process.argv);
 
-const port = new SerialPort(
+export const port = new SerialPort(
     program.opts().serialport,
     {
         baudRate: 2400,
@@ -34,15 +32,4 @@ process.on('SIGINT', () => {
     process.exit();
 });
 
-port.pipe(new SerialPort.parsers.Readline({ delimiter: '\r' })).on(
-    'data',
-    (data) => handle(data as string)
-);
-
-(async () => {
-    const _delay = parseInt(program.opts().delay) * 1000;
-    for (;;) {
-        commands.forEach((c) => port.write(c.command));
-        await delay(_delay);
-    }
-})();
+startPolling(port, parseInt(program.opts().delay) * 1000);

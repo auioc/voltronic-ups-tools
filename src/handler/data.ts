@@ -1,10 +1,10 @@
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject } from 'references';
-import { program } from './app';
-import commands from './commands';
-import { ResponseData } from './response/base';
-import { createKeyValueTable } from './utils/table';
-import { isoDate } from './utils/time';
+import { program } from '../app';
+import { ResponseData } from '../response/base';
+import { createKeyValueTable } from '../utils/table';
+import { isoDate } from '../utils/time';
+import commands from './command';
 
 let cycle = 0;
 let i = 0;

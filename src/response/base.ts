@@ -1,4 +1,5 @@
-import { IStringIndexedObject } from 'references';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject, IStringIndexedObject } from 'references';
 
 export class ResponseData implements IStringIndexedObject<any> {
     protected raw: string;
@@ -10,10 +11,10 @@ export class ResponseData implements IStringIndexedObject<any> {
     }
 
     render(): string {
-        return JSON.stringify(this);
+        return '';
     }
 
-    summarise(): IStringIndexedObject<any> {
-        return {};
+    summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        return null;
     }
 }

@@ -1,4 +1,5 @@
-import { IStringIndexedObject } from 'references';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
 import { createTwoTable } from '../utils/table';
 import { ResponseData } from './base';
@@ -46,8 +47,16 @@ class OperationalModeStatus extends ResponseData {
         );
     }
 
-    summarise(): IStringIndexedObject<any> {
-        return { 'Operational Mode': this.b_operational_mode };
+    summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        return [
+            [
+                {
+                    key: 'Operational Mode',
+                    value: this.b_operational_mode,
+                },
+                {},
+            ],
+        ];
     }
 }
 

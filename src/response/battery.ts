@@ -1,4 +1,5 @@
-import { IStringIndexedObject } from 'references';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
 import { createThreeTable, createTwoTable } from '../utils/table';
 import { ResponseData } from './base';
@@ -30,12 +31,18 @@ class BatteryStatus extends ResponseData {
         );
     }
 
-    summarise(): IStringIndexedObject<any> {
-        return {
-            'Battery Voltage': this.t_voltage + ' V',
-            'Battery Level': this.t_capacity_level + ' %',
-            'Remaining Backup Time': this.t_remaining_backup_time + ' min',
-        };
+    summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        return [
+            [{ key: 'Battery Voltage', value: this.t_voltage + ' V' }, {}],
+            [{ key: 'Battery Level', value: this.t_capacity_level + ' %' }, {}],
+            [
+                {
+                    key: 'Remaining Backup Time',
+                    value: this.t_remaining_backup_time + ' min',
+                },
+                {},
+            ],
+        ];
     }
 }
 

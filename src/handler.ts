@@ -1,20 +1,21 @@
-import { IStringIndexedObject } from 'references';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject } from 'references';
 import { program } from './app';
 import commands from './commands';
 import { ResponseData } from './response/base';
-import { createNameValueTable } from './utils/table';
+import { createKeyValueTable } from './utils/table';
 import { isoDate } from './utils/time';
 
 let cycle = 0;
 let i = 0;
 let r: string[] = [];
-let s: IStringIndexedObject<any> = {};
+let s: [IKeyValueObject<any>, RowOptionsRaw][] = [];
 
 function output(): void {
     process.stdout.write('\x1b[H\x1b[J'); // move cursor to top left corner and clear screen
 
     if (program.opts().summary) {
-        console.info(createNameValueTable(s, 'Summary Status').render());
+        console.info(createKeyValueTable(s, 'Summary Status').render());
     } else {
         console.info(r.join('\n').trimEnd());
     }
@@ -22,7 +23,7 @@ function output(): void {
 
     i = 0;
     r = [];
-    s = {};
+    s = [];
 }
 
 export function handle(data: string) {
@@ -31,7 +32,7 @@ export function handle(data: string) {
     ]) as ResponseData;
 
     r.push(p.render());
-    Object.assign(s, p.summarise());
+    s = [...s, ...p.summarise()];
 
     i++;
     if (i === commands.length) {

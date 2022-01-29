@@ -1,4 +1,5 @@
-import { IStringIndexedObject } from 'references';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
 import { createThreeTable, createTwoTable } from '../utils/table';
 import { ResponseData } from './base';
@@ -66,19 +67,56 @@ class GeneralStatus extends ResponseData {
         );
     }
 
-    summarise(): IStringIndexedObject<any> {
-        return {
-            'Input Voltage': this.t_input_voltage.toFixed(1) + ' V',
-            'Input Frequency': this.t_input_frequency + ' Hz',
-            'Output Voltage': this.t_output_voltage.toFixed(1) + ' V',
-            'Output Current': this.t_output_current.toFixed(1) + ' A',
-            'Output Power':
-                (this.t_output_voltage * this.t_output_current).toFixed(2) +
-                ' W',
-            'Output Frequency': this.t_input_frequency + ' Hz',
-            Temperature: this.t_temperature + ' °C',
-            'Load Level': this.t_load_level + ' %',
-        };
+    summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        return [
+            [
+                {
+                    key: 'Input Voltage',
+                    value: this.t_input_voltage.toFixed(1) + ' V',
+                },
+                {},
+            ],
+            [
+                {
+                    key: 'Input Frequency',
+                    value: this.t_input_frequency + ' Hz',
+                },
+                {},
+            ],
+            [
+                {
+                    key: 'Output Voltage',
+                    value: this.t_output_voltage.toFixed(1) + ' V',
+                },
+                {},
+            ],
+            [
+                {
+                    key: 'Output Current',
+                    value: this.t_output_current.toFixed(1) + ' A',
+                },
+                {},
+            ],
+            [
+                {
+                    key: 'Output Power',
+                    value:
+                        (this.t_output_voltage * this.t_output_current).toFixed(
+                            2
+                        ) + ' W',
+                },
+                {},
+            ],
+            [
+                {
+                    key: 'Output Frequency',
+                    value: this.t_input_frequency + ' Hz',
+                },
+                {},
+            ],
+            [{ key: 'Temperature', value: this.t_temperature + ' °C' }, {}],
+            [{ key: 'Load Level', value: this.t_load_level + ' %' }, {}],
+        ];
     }
 }
 

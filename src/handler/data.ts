@@ -12,10 +12,10 @@ const polling_times = parseInt(program.opts().pollingTimes);
 
 export function switchDisplayMode() {
     summary = !summary;
-    console.log(
-        "\x1b[7mThe display mode will switch to '" +
+    process.stdout.write(
+        "\x1B[K\x1b[7mThe display mode will switch to '" +
             (summary ? 'summary' : 'verbose') +
-            "' in the next cycle\x1b[0m"
+            "' in the next cycle\x1b[0m\r"
     );
 }
 

@@ -135,3 +135,36 @@ export function createKeyValueTable(
 
     return table;
 }
+
+export function getColorByRange(
+    value: number,
+    low: number,
+    high: number,
+    reverse = false,
+    noGreen = true
+): RowOptionsRaw {
+    if (value > high) {
+        return noGreen ? {} : { color: reverse ? 'green' : 'red' };
+    }
+    if (value > low) {
+        return { color: 'yellow' };
+    }
+    return noGreen ? {} : { color: reverse ? 'red' : 'green' };
+}
+
+export function getColorByFixed(
+    value: number,
+    fixedValue: number,
+    low: number,
+    high: number,
+    noGreen = true
+): RowOptionsRaw {
+    const d = Math.abs(fixedValue - value);
+    if (d > high) {
+        return { color: 'red' };
+    }
+    if (d > low) {
+        return { color: 'yellow' };
+    }
+    return noGreen ? {} : { color: 'green' };
+}

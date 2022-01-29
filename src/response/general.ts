@@ -1,7 +1,12 @@
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
-import { createThreeTable, createTwoTable } from '../utils/table';
+import {
+    createThreeTable,
+    createTwoTable,
+    getColorByFixed,
+    getColorByRange,
+} from '../utils/table';
 import { ResponseData } from './base';
 
 const enum UpsType {
@@ -68,7 +73,9 @@ class GeneralStatus extends ResponseData {
     }
 
     summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
-        return [
+        const load_color = getColorByRange(this.t_load_level, 60, 90);
+
+        const r: [IKeyValueObject<any>, RowOptionsRaw][] = [
             [
                 {
                     key: 'Input Voltage',
@@ -81,7 +88,7 @@ class GeneralStatus extends ResponseData {
                     key: 'Input Frequency',
                     value: this.t_input_frequency + ' Hz',
                 },
-                {},
+                getColorByFixed(this.t_input_frequency, 50, 0, 1),
             ],
             [
                 {
@@ -95,7 +102,7 @@ class GeneralStatus extends ResponseData {
                     key: 'Output Current',
                     value: this.t_output_current.toFixed(1) + ' A',
                 },
-                {},
+                load_color,
             ],
             [
                 {
@@ -105,18 +112,27 @@ class GeneralStatus extends ResponseData {
                             2
                         ) + ' W',
                 },
-                {},
+                load_color,
             ],
             [
                 {
                     key: 'Output Frequency',
-                    value: this.t_input_frequency + ' Hz',
+                    value: this.t_output_frequency + ' Hz',
                 },
-                {},
+                getColorByFixed(this.t_output_frequency, 50, 0, 1),
             ],
-            [{ key: 'Temperature', value: this.t_temperature + ' °C' }, {}],
-            [{ key: 'Load Level', value: this.t_load_level + ' %' }, {}],
+
+            [
+                { key: 'Load Level', value: this.t_load_level + ' %' },
+                load_color,
+            ],
+            [
+                { key: 'Temperature', value: this.t_temperature + ' °C' },
+                getColorByRange(this.t_temperature, 30, 60),
+            ],
         ];
+
+        return r;
     }
 }
 

@@ -48,13 +48,31 @@ class OperationalModeStatus extends ResponseData {
     }
 
     summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        let c;
+        switch (this.b_operational_mode) {
+            case OperationalMode.Battery: {
+                c = 'yellow';
+                break;
+            }
+            case OperationalMode.Fault: {
+                c = 'red';
+                break;
+            }
+            case OperationalMode.PowerOn:
+            case OperationalMode.Standby:
+            case OperationalMode.Shutdown:
+            case OperationalMode.BatteryTest: {
+                c = 'blue';
+                break;
+            }
+        }
         return [
             [
                 {
                     key: 'Operational Mode',
                     value: this.b_operational_mode,
                 },
-                {},
+                c ? { color: c } : {},
             ],
         ];
     }

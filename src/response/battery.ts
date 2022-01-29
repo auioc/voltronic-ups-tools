@@ -1,7 +1,11 @@
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
-import { createThreeTable, createTwoTable } from '../utils/table';
+import {
+    createThreeTable,
+    createTwoTable,
+    getColorByRange,
+} from '../utils/table';
 import { ResponseData } from './base';
 
 class BatteryStatus extends ResponseData {
@@ -32,15 +36,19 @@ class BatteryStatus extends ResponseData {
     }
 
     summarise(): [IKeyValueObject<any>, RowOptionsRaw][] {
+        const levelColor = getColorByRange(this.t_capacity_level, 20, 50, true);
         return [
             [{ key: 'Battery Voltage', value: this.t_voltage + ' V' }, {}],
-            [{ key: 'Battery Level', value: this.t_capacity_level + ' %' }, {}],
+            [
+                { key: 'Battery Level', value: this.t_capacity_level + ' %' },
+                levelColor,
+            ],
             [
                 {
                     key: 'Remaining Backup Time',
                     value: this.t_remaining_backup_time + ' min',
                 },
-                {},
+                levelColor,
             ],
         ];
     }

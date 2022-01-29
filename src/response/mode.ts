@@ -1,5 +1,6 @@
 import { IStringIndexedObject } from 'references';
-import { createTwoTable, horizontalConcat } from '../utils';
+import { createTwoTable } from '../utils';
+import { horizontalConcat } from '../utils/string';
 import { ResponseData } from './base';
 
 const enum OperationalMode {

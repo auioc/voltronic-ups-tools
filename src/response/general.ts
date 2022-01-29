@@ -1,5 +1,6 @@
 import { IStringIndexedObject } from 'references';
-import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
+import { createThreeTable, createTwoTable } from '../utils';
+import { horizontalConcat } from '../utils/string';
 import { ResponseData } from './base';
 
 const enum UpsType {

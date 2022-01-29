@@ -2,7 +2,7 @@ export interface IData {
     [index: string]: any;
 }
 
-export class Data implements IData {
+export class ResponseData implements IData {
     protected raw: string;
     protected parsed: string[];
 

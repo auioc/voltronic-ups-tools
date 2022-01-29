@@ -1,11 +1,11 @@
-import { Data } from './data/base';
-import BatteryStatus from './data/battery';
-import GeneralStatus from './data/general';
-import OperationalModeStatus from './data/mode';
+import { ResponseData } from './response/base';
+import BatteryStatus from './response/battery';
+import GeneralStatus from './response/general';
+import OperationalModeStatus from './response/mode';
 
 const commands: {
     command: string;
-    deserializer: typeof Data;
+    deserializer: typeof ResponseData;
 }[] = [
     {
         command: 'QMOD\r',

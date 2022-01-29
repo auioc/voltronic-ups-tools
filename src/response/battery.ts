@@ -1,7 +1,7 @@
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { Data, IData } from './base';
+import { IData, ResponseData } from './base';
 
-class BatteryStatus extends Data {
+class BatteryStatus extends ResponseData {
     t_voltage: number;
     t_capacity_level: number;
     t_remaining_backup_time: number;

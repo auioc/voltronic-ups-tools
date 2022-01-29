@@ -1,5 +1,5 @@
 import { createTwoTable, horizontalConcat } from '../utils';
-import { Data, IData } from './base';
+import { IData, ResponseData } from './base';
 
 const enum OperationalMode {
     PowerOn = 'Power On Mode',
@@ -27,7 +27,7 @@ const OperationalModeMap: { [index: string]: OperationalMode } = {
     D: OperationalMode.Shutdown,
 };
 
-class OperationalModeStatus extends Data {
+class OperationalModeStatus extends ResponseData {
     b_operational_mode: OperationalMode;
 
     // QMOD\r

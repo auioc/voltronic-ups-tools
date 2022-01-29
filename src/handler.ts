@@ -1,6 +1,6 @@
 import { program } from './app';
 import commands from './commands';
-import { Data, IData } from './data/base';
+import { IData, ResponseData } from './response/base';
 import { createNameValueTable, isoDate } from './utils';
 
 let cycle = 0;
@@ -24,7 +24,9 @@ function output(): void {
 }
 
 export function handle(data: string) {
-    const p = Reflect.construct(commands[i].deserializer, [data]) as Data;
+    const p = Reflect.construct(commands[i].deserializer, [
+        data,
+    ]) as ResponseData;
 
     r.push(p.render());
     Object.assign(s, p.summarise());

@@ -1,5 +1,6 @@
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject } from 'references';
+import { exit } from '../app';
 import program from '../program';
 import { ResponseData } from '../response/base';
 import { createKeyValueTable } from '../utils/table';
@@ -7,6 +8,7 @@ import { isoDate } from '../utils/time';
 import commands from './command';
 
 let summary = program.opts().summary;
+const polling_times = parseInt(program.opts().pollingTimes);
 
 export function switchDisplayMode() {
     summary = !summary;
@@ -30,7 +32,15 @@ function output(): void {
     } else {
         console.info(r.join('\n').trimEnd());
     }
-    console.info(`Polling cycle ${cycle}\nTime: ${isoDate(Date.now())}`);
+
+    console.info(
+        `Polling cycle ${cycle}${
+            polling_times - cycle > 0
+                ? `, auto exit after ${polling_times - cycle} cycles`
+                : ''
+        }`
+    );
+    console.info(`Time: ${isoDate(Date.now())}`);
 
     i = 0;
     r = [];
@@ -49,6 +59,10 @@ function handle(data: string) {
     if (i === commands.length) {
         cycle++;
         output();
+    }
+
+    if (polling_times > 0 && cycle >= polling_times) {
+        exit();
     }
 }
 

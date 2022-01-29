@@ -22,7 +22,7 @@ export const port = new SerialPort(
 
 startPolling(port);
 
-function exit() {
+export function exit() {
     port.close();
     process.exit();
 }

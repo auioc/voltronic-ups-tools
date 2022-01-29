@@ -7,6 +7,13 @@ program
     .option('-t, --polling-times <n>', 'auto exit after polling N times', '0')
     .option('-s, --summary', 'summary mode');
 
+program.addHelpText(
+    'after',
+    `Shortcuts:
+  q  exit
+  s  switch display mode between 'summary' and 'verbose'`
+);
+
 program.parse(process.argv);
 
 export default program;

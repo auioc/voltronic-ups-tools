@@ -2,7 +2,8 @@ import { IStringIndexedObject } from 'references';
 import { program } from './app';
 import commands from './commands';
 import { ResponseData } from './response/base';
-import { createNameValueTable, isoDate } from './utils';
+import { createNameValueTable } from './utils';
+import { isoDate } from './utils/time';
 
 let cycle = 0;
 let i = 0;

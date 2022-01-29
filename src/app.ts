@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import * as SerialPort from 'serialport';
 import commands from './commands';
 import { handle } from './handler';
-import { delay } from './utils';
+import { delay } from './utils/time';
 
 export const program = new Command();
 

@@ -2,8 +2,8 @@ import { Table } from 'console-table-printer';
 import { ComplexOptions } from 'console-table-printer/dist/src/models/external-table';
 import { IStringIndexedObject } from 'references';
 
-export function createTable(
-    data: { [index: string]: any },
+export function createTableFromStringIndexedObject(
+    data: IStringIndexedObject<any>,
     options: ComplexOptions,
     shouldAdd: (key: string, value: any) => boolean,
     createRow: (key: string, value: any) => { [index: string]: any }
@@ -26,7 +26,7 @@ export function createNameValueTable(
     data: IStringIndexedObject<any>,
     title?: string
 ): Table {
-    return createTable(
+    return createTableFromStringIndexedObject(
         data,
         {
             columns: [
@@ -61,7 +61,7 @@ export function createTwoTable(
     data: IStringIndexedObject<any>,
     title?: string
 ): Table {
-    return createTable(
+    return createTableFromStringIndexedObject(
         data,
         {
             columns: [
@@ -82,7 +82,7 @@ export function createThreeTable(
     data: IStringIndexedObject<any>,
     title?: string
 ): Table {
-    return createTable(
+    return createTableFromStringIndexedObject(
         data,
         {
             columns: [

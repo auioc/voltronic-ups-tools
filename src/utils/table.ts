@@ -1,6 +1,10 @@
 import { Table } from 'console-table-printer';
-import { ComplexOptions } from 'console-table-printer/dist/src/models/external-table';
-import { IStringIndexedObject } from 'references';
+import {
+    ColumnOptionsRaw,
+    ComplexOptions,
+} from 'console-table-printer/dist/src/models/external-table';
+import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
+import { IKeyValueObject, IStringIndexedObject } from 'references';
 
 export function createTableFromStringIndexedObject(
     data: IStringIndexedObject<any>,
@@ -99,4 +103,35 @@ export function createThreeTable(
             unit: getUnitByName(key),
         })
     );
+}
+
+export function createKeyValueTable(
+    data: [IKeyValueObject<any>, RowOptionsRaw][],
+    tableTitle?: string,
+    keyColumnOptions?: ColumnOptionsRaw,
+    ValueColumnOptions?: ColumnOptionsRaw
+): Table {
+    const table = new Table({
+        columns: [
+            keyColumnOptions === undefined
+                ? { name: 'key', title: 'Key', alignment: 'left' }
+                : ((c) => {
+                      c.name = 'key';
+                      return c;
+                  })(keyColumnOptions),
+            ValueColumnOptions === undefined
+                ? { name: 'value', title: 'Value', alignment: 'left' }
+                : ((c) => {
+                      c.name = 'value';
+                      return c;
+                  })(ValueColumnOptions),
+        ],
+        title: tableTitle,
+    });
+
+    data.forEach((row) => {
+        table.addRow(row[0], row[1]);
+    });
+
+    return table;
 }

@@ -22,8 +22,16 @@ export const port = new SerialPort(
 
 startPolling(port);
 
+function exit() {
+    port.close();
+    process.exit();
+}
+
 emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 process.stdin.on('keypress', (s, key) => {
+    if (key.name === 'q') exit();
+    if (key.ctrl && key.name === 'c') exit();
+
     if (key.name === 's') switchDisplayMode();
 });

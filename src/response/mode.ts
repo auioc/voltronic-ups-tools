@@ -1,5 +1,6 @@
+import { IStringIndexedObject } from 'references';
 import { createTwoTable, horizontalConcat } from '../utils';
-import { IData, ResponseData } from './base';
+import { ResponseData } from './base';
 
 const enum OperationalMode {
     PowerOn = 'Power On Mode',
@@ -44,7 +45,7 @@ class OperationalModeStatus extends ResponseData {
         );
     }
 
-    summarise(): IData {
+    summarise(): IStringIndexedObject<any> {
         return { 'Operational Mode': this.b_operational_mode };
     }
 }

@@ -1,5 +1,6 @@
+import { IStringIndexedObject } from 'references';
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { IData, ResponseData } from './base';
+import { ResponseData } from './base';
 
 class BatteryStatus extends ResponseData {
     t_voltage: number;
@@ -28,7 +29,7 @@ class BatteryStatus extends ResponseData {
         );
     }
 
-    summarise(): IData {
+    summarise(): IStringIndexedObject<any> {
         return {
             'Battery Voltage': this.t_voltage + ' V',
             'Battery Level': this.t_capacity_level + ' %',

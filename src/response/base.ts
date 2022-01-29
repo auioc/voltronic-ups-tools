@@ -1,8 +1,6 @@
-export interface IData {
-    [index: string]: any;
-}
+import { IStringIndexedObject } from 'references';
 
-export class ResponseData implements IData {
+export class ResponseData implements IStringIndexedObject<any> {
     protected raw: string;
     protected parsed: string[];
 
@@ -15,7 +13,7 @@ export class ResponseData implements IData {
         return JSON.stringify(this);
     }
 
-    summarise(): IData {
+    summarise(): IStringIndexedObject<any> {
         return {};
     }
 }

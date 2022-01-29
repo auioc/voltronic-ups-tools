@@ -1,12 +1,13 @@
+import { IStringIndexedObject } from 'references';
 import { program } from './app';
 import commands from './commands';
-import { IData, ResponseData } from './response/base';
+import { ResponseData } from './response/base';
 import { createNameValueTable, isoDate } from './utils';
 
 let cycle = 0;
 let i = 0;
 let r: string[] = [];
-let s: IData = {};
+let s: IStringIndexedObject<any> = {};
 
 function output(): void {
     process.stdout.write('\x1b[H\x1b[J'); // move cursor to top left corner and clear screen

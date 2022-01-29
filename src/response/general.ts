@@ -1,5 +1,6 @@
+import { IStringIndexedObject } from 'references';
 import { createThreeTable, createTwoTable, horizontalConcat } from '../utils';
-import { IData, ResponseData } from './base';
+import { ResponseData } from './base';
 
 const enum UpsType {
     Standby = 'Standby',
@@ -64,7 +65,7 @@ class GeneralStatus extends ResponseData {
         );
     }
 
-    summarise(): IData {
+    summarise(): IStringIndexedObject<any> {
         return {
             'Input Voltage': this.t_input_voltage.toFixed(1) + ' V',
             'Input Frequency': this.t_input_frequency + ' Hz',

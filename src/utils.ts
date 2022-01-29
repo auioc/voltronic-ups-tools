@@ -1,6 +1,6 @@
 import { Table } from 'console-table-printer';
 import { ComplexOptions } from 'console-table-printer/dist/src/models/external-table';
-import { IData } from './response/base';
+import { IStringIndexedObject } from 'references';
 
 export function delay(ms: number) {
     return new Promise<void>((resolve) => {
@@ -59,7 +59,10 @@ export function createTable(
     return table;
 }
 
-export function createNameValueTable(data: IData, title?: string): Table {
+export function createNameValueTable(
+    data: IStringIndexedObject<any>,
+    title?: string
+): Table {
     return createTable(
         data,
         {
@@ -91,7 +94,10 @@ function getUnitByName(name: string): string {
     return '';
 }
 
-export function createTwoTable(data: IData, title?: string): Table {
+export function createTwoTable(
+    data: IStringIndexedObject<any>,
+    title?: string
+): Table {
     return createTable(
         data,
         {
@@ -109,7 +115,10 @@ export function createTwoTable(data: IData, title?: string): Table {
     );
 }
 
-export function createThreeTable(data: IData, title?: string): Table {
+export function createThreeTable(
+    data: IStringIndexedObject<any>,
+    title?: string
+): Table {
     return createTable(
         data,
         {

@@ -2,7 +2,7 @@ import * as SerialPort from 'serialport';
 import program from '../program';
 import { delay } from '../utils/time';
 import commands from './command';
-import { handle } from './data';
+import handle from './data';
 
 async function startPolling(port: SerialPort) {
     port.pipe(new SerialPort.parsers.Readline({ delimiter: '\r' })).on(

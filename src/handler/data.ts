@@ -37,7 +37,7 @@ function output(): void {
     s = [];
 }
 
-export function handle(data: string) {
+function handle(data: string) {
     const p = Reflect.construct(commands[i].deserializer, [
         data,
     ]) as ResponseData;
@@ -51,3 +51,5 @@ export function handle(data: string) {
         output();
     }
 }
+
+export default handle;

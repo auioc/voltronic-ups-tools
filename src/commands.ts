@@ -5,14 +5,14 @@ import OperationalModeStatus from './data/mode';
 
 const commands: {
     command: string;
-    handler: (data: string) => Data;
+    deserializer: typeof Data;
 }[] = [
     {
         command: 'QMOD\r',
-        handler: (r) => new OperationalModeStatus(r),
+        deserializer: OperationalModeStatus,
     },
-    { command: 'QGS\r', handler: (r) => new GeneralStatus(r) },
-    { command: 'QBV\r', handler: (r) => new BatteryStatus(r) },
+    { command: 'QGS\r', deserializer: GeneralStatus },
+    { command: 'QBV\r', deserializer: BatteryStatus },
 ];
 
 export default commands;

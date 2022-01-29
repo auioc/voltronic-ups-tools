@@ -10,7 +10,8 @@ async function startPolling(port: SerialPort) {
         (data) => handle(data as string)
     );
 
-    const _delay = parseInt(program.opts().delay) * 1000;
+    let _delay = parseInt(program.opts().delay) * 1000;
+    _delay = _delay >= 1000 ? _delay : 1000;
     for (;;) {
         commands.forEach((c) => port.write(c.command));
         await delay(_delay);

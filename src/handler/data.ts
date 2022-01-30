@@ -53,12 +53,14 @@ let cycle = 0;
 let i = 0;
 let r: string[] = [];
 let s: [IKeyValueObject<any>, RowOptionsRaw][] = [];
+let v: string[] = [];
 
 function output(): void {
     process.stdout.write('\x1b[H\x1b[J'); // move cursor to top left corner and clear screen
 
     switch (display_mode) {
         case DisplayMode.Raw: {
+            console.info(r.join('\n').trimEnd());
             break;
         }
         case DisplayMode.Summary: {
@@ -66,7 +68,7 @@ function output(): void {
             break;
         }
         case DisplayMode.Verbose: {
-            console.info(r.join('\n').trimEnd());
+            console.info(v.join('\n').trimEnd());
             break;
         }
     }
@@ -83,15 +85,16 @@ function output(): void {
     i = 0;
     r = [];
     s = [];
+    v = [];
 }
 
 function handle(data: string) {
-    const p = Reflect.construct(commands[i].deserializer, [
-        data,
-    ]) as ResponseData;
+    const command = commands[i];
+    const p = Reflect.construct(command.deserializer, [data]) as ResponseData;
 
-    r.push(p.render());
+    r.push(`${command.command.replace('\r', '\\r')}\t${p.getRaw()}`);
     s = [...s, ...p.summarise()];
+    v.push(p.render());
 
     i++;
     if (i === commands.length) {

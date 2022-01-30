@@ -10,6 +10,14 @@ export class ResponseData implements IStringIndexedObject<any> {
         this.parsed = data.replace('(', '').split(' ');
     }
 
+    getRaw(): string {
+        return this.raw;
+    }
+
+    getParsed(): string[] {
+        return this.parsed;
+    }
+
     render(): string {
         return '';
     }

@@ -92,9 +92,20 @@ function handle(data: string) {
     const command = commands[i];
     const p = Reflect.construct(command.deserializer, [data]) as ResponseData;
 
-    r.push(`${command.command.replace('\r', '\\r')}\t${p.getRaw()}`);
-    s = [...s, ...p.summarise()];
-    v.push(p.render());
+    switch (display_mode) {
+        case DisplayMode.Raw: {
+            r.push(`${command.command.replace('\r', '\\r')}\t${p.getRaw()}`);
+            break;
+        }
+        case DisplayMode.Summary: {
+            s = [...s, ...p.summarise()];
+            break;
+        }
+        case DisplayMode.Verbose: {
+            v.push(p.render());
+            break;
+        }
+    }
 
     i++;
     if (i === commands.length) {

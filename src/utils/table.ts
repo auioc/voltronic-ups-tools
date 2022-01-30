@@ -5,6 +5,7 @@ import {
 } from 'console-table-printer/dist/src/models/external-table';
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject, IStringIndexedObject } from 'references';
+import { horizontalConcat } from './string';
 
 export function createTableFromStringIndexedObject(
     data: IStringIndexedObject<any>,
@@ -134,6 +135,46 @@ export function createKeyValueTable(
     });
 
     return table;
+}
+
+export function splitTable(
+    table: Table,
+    maxRows: number,
+    fixedRows = true
+): string {
+    const rows = table.table.rows;
+    if (rows.length < maxRows) {
+        return table.render();
+    }
+
+    let result = '';
+    ((a, s, f, p) => {
+        let i = 0;
+        const n = [];
+        while (i < a.length) {
+            const c = a.slice(i, (i += s));
+            if (f) {
+                ((p, s, a) => {
+                    if (a.length >= s) return a;
+                    for (let i = 0, l = s - a.length; i < l; i++) {
+                        a.push(p);
+                    }
+                    return a;
+                })(p, s, c);
+            }
+            n.push(c);
+        }
+        return n;
+    })(rows, maxRows, fixedRows, {
+        text: {},
+        color: '',
+        separator: false,
+    }).forEach((rows) => {
+        table.table.rows = rows;
+        result = horizontalConcat(result, table.render());
+    });
+
+    return result;
 }
 
 export function getColorByRange(

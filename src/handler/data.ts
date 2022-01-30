@@ -7,14 +7,44 @@ import { createKeyValueTable } from '../utils/table';
 import { isoDate } from '../utils/time';
 import commands from './command';
 
-let summary = program.opts().summary;
+enum DisplayMode {
+    Raw,
+    Summary,
+    Verbose,
+}
+
 const polling_times = parseInt(program.opts().pollingTimes);
+let display_mode = ((value: string) => {
+    let mode: number;
+    const n = Number(value);
+    if (isNaN(n)) {
+        mode = (
+            {
+                raw: DisplayMode.Raw,
+                summary: DisplayMode.Summary,
+                verbose: DisplayMode.Verbose,
+            } as { [index: string]: DisplayMode }
+        )[value];
+    } else {
+        mode = n;
+    }
+    if (!(mode in DisplayMode)) {
+        console.warn(
+            `\x1b[33mUnknown display mode '${value}', switch to 'Raw' mode\x1b[0m`
+        );
+        mode = DisplayMode.Raw;
+    }
+    return mode as DisplayMode;
+})(program.opts().displayMode);
 
 export function switchDisplayMode() {
-    summary = !summary;
+    display_mode =
+        display_mode >= DisplayMode.Verbose
+            ? DisplayMode.Raw
+            : display_mode + 1;
     process.stdout.write(
         "\x1B[K\x1b[7mThe display mode will switch to '" +
-            (summary ? 'summary' : 'verbose') +
+            DisplayMode[display_mode] +
             "' in the next cycle\x1b[0m\r"
     );
 }
@@ -27,10 +57,18 @@ let s: [IKeyValueObject<any>, RowOptionsRaw][] = [];
 function output(): void {
     process.stdout.write('\x1b[H\x1b[J'); // move cursor to top left corner and clear screen
 
-    if (summary) {
-        console.info(createKeyValueTable(s, 'Summary Status').render());
-    } else {
-        console.info(r.join('\n').trimEnd());
+    switch (display_mode) {
+        case DisplayMode.Raw: {
+            break;
+        }
+        case DisplayMode.Summary: {
+            console.info(createKeyValueTable(s, 'Summary Status').render());
+            break;
+        }
+        case DisplayMode.Verbose: {
+            console.info(r.join('\n').trimEnd());
+            break;
+        }
     }
 
     console.info(

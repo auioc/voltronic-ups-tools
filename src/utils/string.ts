@@ -10,6 +10,14 @@ export function getPrintableRowLength(str: string): number {
     return removeEscape(str).length;
 }
 
+export function getMaxLength(strArray: string[], ignoreEscape = true): number {
+    let l = 0;
+    strArray
+        .map((s) => (ignoreEscape ? removeEscape(s) : s))
+        .forEach((s) => (l = s.length > l ? s.length : l));
+    return l;
+}
+
 export function padEnd(
     str: string,
     maxLength: number,
@@ -18,25 +26,17 @@ export function padEnd(
 ): string {
     const l = ignoreEscape ? getPrintableRowLength(str) : str.length;
     if (l >= maxLength) return str;
-    const r = str + fillString.repeat(maxLength - l);
-    return r;
+    return str + fillString.repeat(maxLength - l);
 }
 
 export function horizontalConcat(left: string, right: string): string {
-    function getMaxRowLength(rows: string[]): number {
-        let l = 0;
-        rows.map((r) => removeEscape(r)) // remove \x1b
-            .forEach((r) => (l = r.length > l ? r.length : l));
-        return l;
-    }
-
     const l_rows = left.split('\n');
     const l_row_count = l_rows.length;
-    const l_row_length = getMaxRowLength(l_rows);
+    const l_row_length = getMaxLength(l_rows);
 
     const r_rows = right.split('\n');
     const r_row_count = r_rows.length;
-    const r_row_length = getMaxRowLength(r_rows);
+    const r_row_length = getMaxLength(r_rows);
 
     const last_row_i = l_row_count > r_row_count ? l_row_count : r_row_count;
 

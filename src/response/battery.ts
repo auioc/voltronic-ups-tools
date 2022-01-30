@@ -2,8 +2,8 @@ import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helper
 import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
 import {
-    createThreeTable,
-    createTwoTable,
+    createStatusTable,
+    createStatusTableWithUnit,
     getColorByRange,
 } from '../utils/table';
 import { ResponseData } from './base';
@@ -30,8 +30,8 @@ class BatteryStatus extends ResponseData {
 
     render(): string {
         return horizontalConcat(
-            createThreeTable(this, 'Battery Status').render(),
-            createTwoTable(this, 'Battery Info').render()
+            createStatusTableWithUnit(this, 'Battery Status').render(),
+            createStatusTable(this, 'Battery Info').render()
         );
     }
 

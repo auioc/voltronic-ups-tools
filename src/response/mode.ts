@@ -1,7 +1,7 @@
 import { RowOptionsRaw } from 'console-table-printer/dist/src/utils/table-helpers';
 import { IKeyValueObject } from 'references';
 import { horizontalConcat } from '../utils/string';
-import { createTwoTable } from '../utils/table';
+import { createStatusTable } from '../utils/table';
 import { ResponseData } from './base';
 
 const enum OperationalMode {
@@ -42,7 +42,7 @@ class OperationalModeStatus extends ResponseData {
 
     render(): string {
         return horizontalConcat(
-            createTwoTable(this).render(),
+            createStatusTable(this).render(),
             createPowerFlow(this.b_operational_mode)
         );
     }

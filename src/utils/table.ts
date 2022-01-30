@@ -63,7 +63,7 @@ function getUnitByName(name: string): string {
     return '';
 }
 
-export function createTwoTable(
+export function createStatusTable(
     data: IStringIndexedObject<any>,
     title?: string
 ): Table {
@@ -84,7 +84,7 @@ export function createTwoTable(
     );
 }
 
-export function createThreeTable(
+export function createStatusTableWithUnit(
     data: IStringIndexedObject<any>,
     title?: string
 ): Table {
